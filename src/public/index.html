@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Information Display</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: {
+                preflight: false,
+            }
+        }
+    </script>
+</head>
+
+<body class="display-body">
+
+    <div class="display-container">
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <!-- Left Panel: Video -->
+            <div class="video-panel">
+                <video id="mainVideo" autoplay muted loop>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div id="overlay-logo" class="video-overlay top-left">
+                    <!-- Logo injected here -->
+                </div>
+                <div id="clock" class="video-overlay bottom-right">00:00:00</div>
+            </div>
+
+            <!-- Right Panel: Slideshow & Schedule -->
+            <div class="right-panel">
+                <div class="slideshow-container" id="slideshow-container">
+                    <!-- Slides injected here -->
+                    <div style="padding: 1rem; text-align:center;">No Images</div>
+                </div>
+
+                <div class="schedule-panel">
+                    <h2 id="schedule-title">Jadwal Perkuliahan Hari Ini</h2>
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Waktu</th>
+                                <th>Mata Kuliah</th>
+                                <th>Dosen</th>
+                                <th>Ruangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schedule-body">
+                            <!-- Schedule rows injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer class="ticker-container">
+            <div class="ticker-text" id="ticker-text">
+                Welcome to our campus! stay tuned for updates...
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: {
+                preflight: false,
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="admin-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-target="section-dashboard">Dashboard</a></li>
+                <li><a href="#" data-target="section-announcements">Announcements</a></li>
+                <li><a href="#" data-target="section-schedule">Class Schedule</a></li>
+                <li><a href="#" data-target="section-slideshow">Slideshow Images</a></li>
+                <li><a href="#" data-target="section-settings">Main Video</a></li>
+                <li><a href="#" data-target="section-general">General Settings</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Section: Dashboard (Stats) -->
+            <div id="section-dashboard" class="section active">
+                <div class="card">
+                    <h2>Dashboard Statistics</h2>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <div
+                            style="flex: 1; min-width: 200px; background: #f8f9fa; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h3 id="statScheduleTotal">0</h3>
+                            <p>Total Classes</p>
+                        </div>
+                        <div
+                            style="flex: 1; min-width: 200px; background: #e3f2fd; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h3 id="statScheduleToday">0</h3>
+                            <p>Classes Today</p>
+                        </div>
+                        <div
+                            style="flex: 1; min-width: 200px; background: #e8f5e9; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h3 id="statSlideshow">0</h3>
+                            <p>Slideshow Images</p>
+                        </div>
+                        <div
+                            style="flex: 1; min-width: 200px; background: #fff3e0; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h3 id="statVideo">No</h3>
+                            <p>Main Video Set</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Announcements -->
+            <div id="section-announcements" class="section">
+                <div class="card">
+                    <h2>Announcements & News</h2>
+                    <button id="btnShowAnnounceForm" class="btn" style="margin-bottom: 1rem;">+ Add New Item</button>
+                    <form id="itemForm"
+                        style="display: none; margin-bottom: 1rem; border: 1px solid #ddd; padding: 1rem; border-radius: 4px;">
+                        <input type="hidden" id="itemId">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="itemTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea id="itemContent" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="itemCategory" class="form-control">
+                                <option value="announcement">Announcement</option>
+                                <option value="news">News</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Save Item</button>
+                        <button type="button" class="btn btn-warning" id="cancelItemEdit">Cancel</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Current List</h3>
+                    <table class="admin-table" id="itemsTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section: Schedule -->
+            <div id="section-schedule" class="section">
+                <div class="card">
+                    <h2>Manage Class Schedule</h2>
+                    <button id="btnShowScheduleForm" class="btn" style="margin-bottom: 1rem;">+ Add Schedule</button>
+                    <form id="scheduleForm"
+                        style="display: none; margin-bottom: 1rem; border: 1px solid #ddd; padding: 1rem; border-radius: 4px;">
+                        <input type="hidden" id="scheduleId">
+                        <div class="form-group">
+                            <label>Course Name</label>
+                            <input type="text" id="courseName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Lecturer</label>
+                            <input type="text" id="lecturer" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Room</label>
+                            <input type="text" id="room" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Day</label>
+                            <select id="dayOfWeek" class="form-control">
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display:flex; gap:1rem;">
+                            <div style="flex:1">
+                                <label>Start Time</label>
+                                <input type="time" id="startTime" class="form-control" required>
+                            </div>
+                            <div style="flex:1">
+                                <label>End Time</label>
+                                <input type="time" id="endTime" class="form-control" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Save Schedule</button>
+                        <button type="button" class="btn btn-warning" id="cancelScheduleEdit">Cancel</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Schedule List</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <label>Filter Day: </label>
+                        <select id="filterDay" style="padding: 0.5rem;">
+                            <option value="">All</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                    </div>
+                    <table class="admin-table" id="scheduleTable">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Time</th>
+                                <th>Course</th>
+                                <th>Lecturer</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section: Slideshow -->
+            <div id="section-slideshow" class="section">
+                <div class="card">
+                    <h2>Slideshow Images</h2>
+                    <p>Upload images to be displayed in the top-right corner.</p>
+                    <button id="btnShowSlideForm" class="btn" style="margin-bottom: 1rem;">+ Upload New Image</button>
+                    <form id="uploadSlideshowForm"
+                        style="display: none; margin-bottom: 1rem; border: 1px solid #ddd; padding: 1rem; border-radius: 4px;">
+                        <div class="form-group">
+                            <label>Title / Caption</label>
+                            <input type="text" id="slideTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Image File</label>
+                            <input type="file" id="slideFile" class="form-control" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn">Upload Image</button>
+                        <button type="button" class="btn btn-warning" id="cancelSlideUpload">Cancel</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Current Images</h3>
+                    <div id="slideshowList" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <!-- Images will be listed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Display Settings (Video) -->
+            <div id="section-settings" class="section">
+                <div class="card">
+                    <h2>Main Video Settings</h2>
+                    <p>Upload a video to play on the main display screen (Left Panel).</p>
+                    <button id="btnShowVideoForm" class="btn" style="margin-bottom: 1rem;">+ Upload New Video</button>
+                    <form id="uploadVideoForm"
+                        style="display: none; margin-bottom: 1rem; border: 1px solid #ddd; padding: 1rem; border-radius: 4px;">
+                        <input type="hidden" id="videoId">
+                        <div class="form-group">
+                            <label>Video File (MP4, WebM - Max 100MB)</label>
+                            <input type="file" id="videoFile" class="form-control"
+                                accept="video/mp4,video/webm,video/x-matroska" required>
+                        </div>
+                        <button type="submit" class="btn">Upload Video</button>
+                        <button type="button" class="btn btn-warning" id="cancelVideoUpload">Cancel</button>
+                        <div id="uploadProgress" style="margin-top:1rem; display:none;">Uploading... please wait.</div>
+                    </form>
+                    <div style="margin-top: 2rem;">
+                        <h4>Current Video URL:</h4>
+                        <code id="currentVideoUrl"
+                            style="background: #eee; padding: 0.5rem; display: block; margin-top: 0.5rem;">None</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: General Settings -->
+            <div id="section-general" class="section">
+                <div class="card">
+                    <h2>Display Appearance</h2>
+
+                    <form id="generalSettingsForm">
+                        <div class="form-group">
+                            <label>School Name / Header Title</label>
+                            <input type="text" id="schoolName" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Logo (Upload New to Replace)</label>
+                            <input type="file" id="logoFile" class="form-control" accept="image/*">
+                            <input type="hidden" id="logoUrl">
+                            <div style="margin-top: 0.5rem;">
+                                Current Logo: <img id="currentLogoPreview" src=""
+                                    style="height: 50px; vertical-align: middle; display: none;"> <span
+                                    id="noLogoText">None</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Page Background Color</label>
+                                <input type="color" id="colorBgPage" class="form-control" style="height: 50px;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Header Background Color</label>
+                                <input type="color" id="colorBgHeader" class="form-control" style="height: 50px;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Header Text Color</label>
+                                <input type="color" id="colorTextHeader" class="form-control" style="height: 50px;">
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Marquee Background Color</label>
+                                <input type="color" id="colorBgMarquee" class="form-control" style="height: 50px;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Marquee Text Color</label>
+                                <input type="color" id="colorTextMarquee" class="form-control" style="height: 50px;">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn">Save Settings</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>Security</h2>
+                    <h3>Change Admin Password</h3>
+                    <form id="changePasswordForm">
+                        <div class="form-group">
+                            <label>New Password (min 6 chars)</label>
+                            <input type="password" id="newPassword" class="form-control" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn btn-danger">Update Password</button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
